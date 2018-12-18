@@ -1,0 +1,41 @@
+﻿@model EventsMedia.Models.Customer
+
+
+@{
+    ViewData["Title"] = "GetCuisine";
+}
+
+<h2>GetCuisine</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr></tr>
+    </thead>
+    @using (Html.BeginForm("GetCuisine1", "Restaurants"))
+    {
+        @Html.HiddenFor(model => model.Latitude)
+        @Html.HiddenFor(model => model.Longitude)
+        @Html.HiddenFor(model => model.city_id)
+        @Html.HiddenFor(model => model.entity_id)
+        @Html.HiddenFor(model => model.entity_type)
+        @Html.HiddenFor(model => model.cuisines)
+        <tbody>
+            @foreach (var item in Model.cuisines)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        <input type ="hidden" name="cuisine" value="@item.Key"/>
+                        <input type="hidden" name="cuisine" value="@item.Value" />
+                        <input type="submit" value="submit"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>

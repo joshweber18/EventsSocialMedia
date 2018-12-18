@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace EventsMedia.Models
 {
-    public class GoogleGeocode
+    public class GeocodeGoogle
     {
-
         public double Latitude { get; set; }
         public double Longitude { get; set; }
     }

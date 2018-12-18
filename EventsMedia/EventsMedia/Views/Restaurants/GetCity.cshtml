@@ -1,0 +1,28 @@
+﻿@model EventsMedia.Models.GeocodeGoogle
+
+@{
+    ViewData["Title"] = "GetCity";
+}
+
+<h2>GetCity</h2>
+
+<h4>GoogleGeocode</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GetCity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @using (Html.BeginForm("GetCity", "Restaurants", FormMethod.Post))
+                {
+                    <label for="Search a City" class="control-label"></label>
+                    <input type="text" id="location" name="location" />
+                    <input type="submit" value="Submit" />
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
