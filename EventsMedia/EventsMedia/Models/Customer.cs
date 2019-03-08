@@ -7,7 +7,7 @@ namespace EventsMedia.Models
 {
     public class Customer
     {
-        public Dictionary<int, string> cuisines = new Dictionary<int, string>();
+        public Dictionary<int, string> cuisines = new Dictionary<int, string>() { };
 
         public Dictionary<int,string> restaurants = new Dictionary<int,string>() { };
 
@@ -18,5 +18,6 @@ namespace EventsMedia.Models
         public double city_id { get; set; }
         public double cuisine_id { get; set; }
         public string cuisine_name { get; set; }
+        public double restaurant_id { get; set; }
     }
 }

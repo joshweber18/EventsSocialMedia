@@ -7,6 +7,7 @@ using EventsMedia.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Restaurants;
 
 namespace EventsMedia.Controllers
 {
@@ -143,29 +144,31 @@ namespace EventsMedia.Controllers
                 var test4 = test3["cuisine_id"];
                 var test5 = test3["cuisine_name"];
 
-                List<int> ids = new List<int>();
-                List<string> name = new List<string>();
+                coordinate.cuisine_id = cuisine;
+
+                //List<int> ids = new List<int>();
+                //List<string> name = new List<string>();
                 
-                foreach (var item in test4)
-                {
-                    ids.Add(item.Value<int>());
-                }
-                foreach (var item in test5)
-                {
-                    name.Add(item.Value<string>());
-                }
-                for (int i = 0; i < ids.Count(); i++)
-                {
-                    coordinate.cuisines.Add(ids[i], name[i]);
-                }
-                var test8 = coordinate.cuisines.Where(x => x.Key.Equals(cuisine)).Select(x => x.Key);
+                //foreach (var item in test4)
+                //{
+                //    ids.Add(item.Value<int>());
+                //}
+                //foreach (var item in test5)
+                //{
+                //    name.Add(item.Value<string>());
+                //}
+                //for (int i = 0; i < ids.Count(); i++)
+                //{
+                //    coordinate.cuisines.Add(ids[i], name[i]);
+                //}
+                //var test8 = coordinate.cuisines.Where(x => x.Key.Equals(cuisine)).Select(x => x.Key);
             }
             return RedirectToAction("GetRestaurant", "Restaurants", coordinate);
         }
 
         public IActionResult GetRestaurant(Customer coordinate)
         {
-            HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/search?entity_id={coordinate.entity_id}&entity_type={coordinate.entity_type}&lat={coordinate.Latitude}&lon={coordinate.Longitude}&cuisines={1}") as HttpWebRequest;
+            HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/search?entity_id={coordinate.entity_id}&entity_type={coordinate.entity_type}&lat={coordinate.Latitude}&lon={coordinate.Longitude}&cuisines={coordinate.cuisine_id}") as HttpWebRequest;
             HttpWebResponse webResponse = null;
             webRequest.Headers.Add("X-Zomato-API-Key", apikey);
             //you can get KeyValue by registering with Zomato.
@@ -183,7 +186,7 @@ namespace EventsMedia.Controllers
                 var test3 = test.Values("restaurant");
                 var test4 = test3["name"];
                 var test5 = test3.Values("R");
-                var test6 = test5["res_id"];
+                var test6 = test5.Values("res_id");
 
                 List<int> ids = new List<int>();
                 List<string> name = new List<string>();
@@ -210,8 +213,8 @@ namespace EventsMedia.Controllers
 
         public IActionResult GetRestaurant1(Customer coordinate, int restaurant)
         {
-            string chosenrestaurant = "Blue Star Cafe";
-            HttpWebRequest webRequest = WebRequest.Create("https://developers.zomato.com/api/v2.1/search?entity_id=123562&entity_type=subzone&lat=43.0389&lon=-87.9065&cuisines=152") as HttpWebRequest;
+            
+            HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/search?entity_id={coordinate.entity_id}&entity_type={coordinate.entity_type}&lat={coordinate.Latitude}&lon={coordinate.Longitude}&cuisines={coordinate.cuisine_id}") as HttpWebRequest;
             HttpWebResponse webResponse = null;
             webRequest.Headers.Add("X-Zomato-API-Key", apikey);
             //you can get KeyValue by registering with Zomato.
@@ -231,54 +234,55 @@ namespace EventsMedia.Controllers
                 var test6 = test3.Values("R");
                 var test4 = test6.Values("res_id");
 
+                coordinate.restaurant_id = restaurant;
 
-                List<int> resid = new List<int>();
-                List<string> resname = new List<string>();
-                Dictionary<int, string> restaurants = new Dictionary<int, string>();
-                foreach (var item in test4)
-                {
-                    resid.Add(item.Value<int>());
-                }
-                foreach (var item in test5)
-                {
-                    resname.Add(item.Value<string>());
-                }
-                for (int i = 0; i < resid.Count(); i++)
-                {
-                    restaurants.Add(resid[i], resname[i]);
-                }
-                for (int i = 0; i < restaurants.Count(); i++)
-                {
-                    var test8 = restaurants.Where(x => x.Value.Equals(chosenrestaurant)).Select(x => x.Key);
-                }
+                //List<int> resid = new List<int>();
+                //List<string> resname = new List<string>();
+                //Dictionary<int, string> restaurants = new Dictionary<int, string>();
+                //foreach (var item in test4)
+                //{
+                //    resid.Add(item.Value<int>());
+                //}
+                //foreach (var item in test5)
+                //{
+                //    resname.Add(item.Value<string>());
+                //}
+                //for (int i = 0; i < resid.Count(); i++)
+                //{
+                //    restaurants.Add(resid[i], resname[i]);
+                //}
+                //for (int i = 0; i < restaurants.Count(); i++)
+                //{
+                //    var test8 = restaurants.Where(x => x.Value.Equals(chosenrestaurant)).Select(x => x.Key);
+                //}
             }
-            return View(restaurantname);
+            return RedirectToAction("GetDetails", coordinate);
         }
 
-        //public IActionResult GetDetails()
-        //{
-        //    HttpWebRequest webRequest = WebRequest.Create("https://developers.zomato.com/api/v2.1/restaurant?res_id=17787188") as HttpWebRequest;
-        //    HttpWebResponse webResponse = null;
-        //    webRequest.Headers.Add("X-Zomato-API-Key", apikey);
-        //    //you can get KeyValue by registering with Zomato.
-        //    webRequest.Method = "GET";
-        //    webResponse = (HttpWebResponse)webRequest.GetResponse();
-        //    RestaurantDetails details = new RestaurantDetails() { };
-        //    if (webResponse.StatusCode == HttpStatusCode.OK)
-        //    {
-        //        StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
-        //        string responseData = responseReader.ReadToEnd();
-        //        JObject restaurant = JsonConvert.DeserializeObject<JObject>(responseData);
+        public IActionResult GetDetails(Customer coordinate)
+        {
+            HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/restaurant?res_id={coordinate.restaurant_id}") as HttpWebRequest;
+            HttpWebResponse webResponse = null;
+            webRequest.Headers.Add("X-Zomato-API-Key", apikey);
+            //you can get KeyValue by registering with Zomato.
+            webRequest.Method = "GET";
+            webResponse = (HttpWebResponse)webRequest.GetResponse();
+            Restaurant details = new Restaurant() { };
+            if (webResponse.StatusCode == HttpStatusCode.OK)
+            {
+                StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
+                string responseData = responseReader.ReadToEnd();
+                JObject restaurant = JsonConvert.DeserializeObject<JObject>(responseData);
 
-        //        var names = restaurant.Values().Select(x => x.ToObject<object>()).ToList();
-        //        var test = restaurant["location"];
-        //        var test2 = test["address"];
-        //        var test3 = restaurant["name"];
-        //        details.Address = Convert.ToString(test2);
-        //        details.ResName = Convert.ToString(test3);
+                var names = restaurant.Values().Select(x => x.ToObject<object>()).ToList();
+                var test = restaurant["location"];
+                var test2 = test["address"];
+                var test3 = restaurant["name"];
+                //details.Address = Convert.ToString(test2);
+                //details.ResName = Convert.ToString(test3);
 
-        //    }
-        //    return View(details);
-        //}
+            }
+            return View(details);
+        }
     }
 }

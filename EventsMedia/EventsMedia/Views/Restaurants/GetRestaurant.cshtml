@@ -6,14 +6,11 @@
 
 <h2>GetRestaurant</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr></tr>
     </thead>
-    @using (Html.BeginForm("GetRestaurant", "Restaurants"))
+    @using (Html.BeginForm("GetRestaurant1", "Restaurants"))
     {
         @Html.HiddenFor(model => model.Latitude)
         @Html.HiddenFor(model => model.Longitude)
@@ -21,6 +18,7 @@
         @Html.HiddenFor(model => model.entity_id)
         @Html.HiddenFor(model => model.entity_type)
         @Html.HiddenFor(model => model.cuisines)
+        @Html.HiddenFor(model => model.cuisine_id)
 
         <tbody>
             @foreach (var item in Model.restaurants)
@@ -30,12 +28,12 @@
                         @Html.DisplayFor(modelItem => item.Value)
                     </td>
                     <td>
-                        <input type="hidden" name="restaurant" value="@item.Key" />
-                        <input type="hidden" name="restaurant" value="@item.Value" />
-                        <input type="submit" value="submit" />
+                        <input type="hidden" value="@item.Key" />
+                        <input type="hidden" value="@item.Value" />
+                        <input type="submit" name="restaurant" value="@item.Key" />
                     </td>
                 </tr>
             }
         </tbody>
     }
-    </table>
+</table>
