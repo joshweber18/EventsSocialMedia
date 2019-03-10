@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Restaurants;
 
+
 namespace EventsMedia.Controllers
 {
     public class RestaurantsController : Controller
@@ -278,9 +279,10 @@ namespace EventsMedia.Controllers
                 var test = restaurant["location"];
                 var test2 = test["address"];
                 var test3 = restaurant["name"];
-                //details.Address = Convert.ToString(test2);
-                //details.ResName = Convert.ToString(test3);
-
+                var test4 = restaurant["photos_url"];
+                var test5 = restaurant["average_cost_for_two"];
+                details.Location.Address = Convert.ToString(test2);
+                details.Name = Convert.ToString(test3);
             }
             return View(details);
         }
