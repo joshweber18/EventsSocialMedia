@@ -122,8 +122,8 @@ namespace EventsMedia.Controllers
             return View(coordinate);
         }
 
-
-        public IActionResult GetCuisine1(Customer coordinate, int cuisine)
+        [HttpPost]
+        public IActionResult GetCuisine(Customer coordinate, int cuisine)
         {
 
             HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/cuisines?city_id={coordinate.city_id}&lat={coordinate.Latitude}&lon={coordinate.Longitude}") as HttpWebRequest;
@@ -268,7 +268,7 @@ namespace EventsMedia.Controllers
             //you can get KeyValue by registering with Zomato.
             webRequest.Method = "GET";
             webResponse = (HttpWebResponse)webRequest.GetResponse();
-            Restaurant details = new Restaurant() { };
+            Customer details = new Customer() { };
             if (webResponse.StatusCode == HttpStatusCode.OK)
             {
                 StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
@@ -281,8 +281,12 @@ namespace EventsMedia.Controllers
                 var test3 = restaurant["name"];
                 var test4 = restaurant["photos_url"];
                 var test5 = restaurant["average_cost_for_two"];
-                details.Location.Address = Convert.ToString(test2);
-                details.Name = Convert.ToString(test3);
+                var test6 = restaurant["user_rating"];
+                var test7 = test6["rating_text"];
+                details.Address = Convert.ToString(test2);
+                details.RestaurantName = Convert.ToString(test3);
+                details.ReviewText = Convert.ToString(test7);
+                details.PhotoURL = Convert.ToString(test4);
             }
             return View(details);
         }

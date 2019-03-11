@@ -19,5 +19,13 @@ namespace EventsMedia.Models
         public double cuisine_id { get; set; }
         public string cuisine_name { get; set; }
         public double restaurant_id { get; set; }
+        public string RestaurantName { get; set; }
+        public string Address { get; set; }
+        public string PhotoURL { get; set; }
+        public double CostForTwo { get; set; }
+        public string ReviewText { get; set; }
+        
+
+
     }
 }

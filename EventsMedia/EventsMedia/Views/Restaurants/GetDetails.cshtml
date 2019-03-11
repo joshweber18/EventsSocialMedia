@@ -1,7 +1,51 @@
-﻿
+﻿@model EventsMedia.Models.Customer
 @{
     ViewData["Title"] = "GetDetails";
 }
 
 <h2>GetDetails</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            @Html.DisplayNameFor(model => model.RestaurantName)
+        </tr>
+        <tr>
+            @Html.DisplayNameFor(model => model.Address)
+        </tr>
+        <tr>
+            @Html.DisplayNameFor(model => model.CostForTwo)
+        </tr>
+        <tr>
+            @Html.DisplayNameFor(model => model.PhotoURL)
+        </tr>
+    </thead>
+    @using (Html.BeginForm("GetRestaurant1", "Restaurants"))
+    {
+        @Html.HiddenFor(model => model.Latitude)
+        @Html.HiddenFor(model => model.Longitude)
+        @Html.HiddenFor(model => model.city_id)
+        @Html.HiddenFor(model => model.entity_id)
+        @Html.HiddenFor(model => model.entity_type)
+        @Html.HiddenFor(model => model.cuisines)
+        @Html.HiddenFor(model => model.cuisine_id)
+
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.RestaurantName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CostForTwo)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PhotoURL)
+            </td>
+        </tr>
+       
+    </tbody>
+    }
+</table>
