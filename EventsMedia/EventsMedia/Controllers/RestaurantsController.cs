@@ -212,7 +212,8 @@ namespace EventsMedia.Controllers
             return View(coordinate);
         }
 
-        public IActionResult GetRestaurant1(Customer coordinate, int restaurant)
+        [HttpPost]
+        public IActionResult GetRestaurant(Customer coordinate, int restaurant)
         {
             
             HttpWebRequest webRequest = WebRequest.Create($"https://developers.zomato.com/api/v2.1/search?entity_id={coordinate.entity_id}&entity_type={coordinate.entity_type}&lat={coordinate.Latitude}&lon={coordinate.Longitude}&cuisines={coordinate.cuisine_id}") as HttpWebRequest;
