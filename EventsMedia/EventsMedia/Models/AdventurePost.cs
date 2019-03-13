@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace EventsMedia.Models
 {
-    public class Brands
+    public class AdventurePost
     {
         [Key]
-        public int BrandId { get; set; }
-
-        public List<Brands> BrandName { get; set; }
+        public int PostId { get; set; }
+        public string PostTitle { get; set; }
 
     }
 }

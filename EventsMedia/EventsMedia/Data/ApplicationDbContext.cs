@@ -14,6 +14,8 @@ namespace EventsMedia.Data
         {
         }
 
-        public DbSet<Brands> Adventure { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<Adventure> AdventuresTable { get; set; }
+        public DbSet<AdventurePost> AdventuresPost { get; set; }
     }
 }
