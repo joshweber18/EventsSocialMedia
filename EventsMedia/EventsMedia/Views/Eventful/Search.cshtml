@@ -1,0 +1,88 @@
+﻿@model EventsMedia.Models.EventfulMain
+@{
+    Layout = null;
+}
+
+<table style="width:90%">
+    <tr>
+        <th>Event</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+    </tr>
+
+    @foreach (var item in Model.events.Event)
+    {
+        <tr>
+            <td><a href="@item.url" target="_blank"><b>@item.title</b></a></td>
+            <td>@item.start_time</td>
+            <td>@item.stop_time</td>
+        </tr>
+
+        <tr>
+            <td>@item.venue_address, @item.city_name, @item.region_name</td>
+        </tr>
+
+        <tr>
+            <td>
+                <p></p>
+            </td>
+        </tr>
+
+    }
+</table>
+
+
+<style>
+    #map {
+        height: 600px;
+        width: 1200px;
+    }
+</style>
+<div class="row">
+    <div id="map"></div>
+    <script>
+            var map;
+                    function initMap() {
+                        var latLng = new google.maps.LatLng(43.0389, -87.9065);
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 14,
+                            center: latLng
+                        });
+                            @foreach(var location in Model.events.Event)
+                            {
+                            <text>
+                var eventName = "@location.title";
+                  var loc = new google.maps.LatLng(@location.latitude, @location.longitude);
+                  var marker = new google.maps.Marker({
+                      map: map,
+                      title: eventName,
+                      position: loc
+                        });
+                        var content =
+                            "<p>" +
+                            "@location.venue_name" +
+                            "<br />" +
+                            "<br />" +
+                            "@location.venue_address" + " " + "@location.city_name" +
+                            "<br />" +
+                            "<br />" +
+                            "@location.description" +
+                            "<br />" +
+                            "<br />" +
+                            "@location.url" +
+                            "</p>";
+                        var infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                            return function () {
+                                infowindow.setContent(content);
+                                infowindow.open(map, marker);
+                            };
+                        })(marker, content));
+                                    </text>
+            }
+            }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPd_kaIJibv8PaW5y-FmYqXnxuD1jRT14&callback=initMap">
+    </script>
+</div>

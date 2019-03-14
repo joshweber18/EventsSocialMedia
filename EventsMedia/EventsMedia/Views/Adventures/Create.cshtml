@@ -35,15 +35,15 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" type="hidden" >
                     <label asp-for="AdventurePostId" class="control-label"></label>
-                    <select asp-for="AdventurePostId" class="form-control" asp-items="ViewBag.AdventurePostId"></select>
+                    <select asp-for="AdventurePostId" type="hidden" class="someclass form-control" asp-items="ViewBag.AdventurePostId"></select>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Done" class="btn btn-default" />
+                    <input type="submit" value="Add" class="btn btn-default" />
                 </div>
                 <div class="form-group">
-                    <button id="buttonid" type="button">Add</button>
+                    <button id="buttonid" type="button">Done</button>
                 </div>
             </form>
         </div>
@@ -59,9 +59,14 @@
 
     $(document).ready(function () {
          $('#buttonid').click(function () {
-        document.location = '@Url.Action("Create","Adventures")';
+        document.location = '@Url.Action("Index","Adventures")';
     });
     });
+
+    $(document).ready(function () {
+        var myVal = $('.someclass option:last').val();
+        $('.someclass').val(myVal);
+    })
 
 </script>
 

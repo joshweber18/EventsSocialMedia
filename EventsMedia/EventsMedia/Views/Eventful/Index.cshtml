@@ -1,0 +1,21 @@
+﻿
+@model EventsMedia.Models.EventfulMain
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h2>Search for upcoming Events...</h2>
+
+
+<form asp-action="Search" method="post">
+    <div class="row input-group group">
+        <input type="text" name="location" id="location" class="form-control" />
+        <input type="text" name="category" id="category" class="form-control" />
+        <input type="date" name="startDate" id="startDate" class="form-control" />
+        <input type="date" name="endDate" id="endDate" class="form-control" />
+    </div>
+    <div class="input-group-btn">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>

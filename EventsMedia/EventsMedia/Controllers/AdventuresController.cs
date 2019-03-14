@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventsMedia.Data;
 using EventsMedia.Models;
+using System.Collections;
 
 namespace EventsMedia.Controllers
 {
@@ -46,13 +47,13 @@ namespace EventsMedia.Controllers
         }
 
         // GET: Adventures/Create
-        public async Task<IActionResult> Create(int id)
+        public IActionResult Create(int id)
         {
             //Adventure adventure = new Adventure();
             //adventure.AdventurePostId = id;
             //_context.Add(adventure);
             //await _context.SaveChangesAsync();
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId");
+            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId"); 
             return View();
         }
 
@@ -67,7 +68,7 @@ namespace EventsMedia.Controllers
             {
                 _context.Add(adventure);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create");
             }
             ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId", adventure.AdventurePostId);
             return View(adventure);
