@@ -17,5 +17,8 @@ namespace EventsMedia.Data
         public DbSet<ApplicationUser> User { get; set; }
         public DbSet<Adventure> AdventuresTable { get; set; }
         public DbSet<AdventurePost> AdventuresPost { get; set; }
+
+        public DbSet<CommentsTable> Comments { get; set; }
+        public DbSet<FavoriteEvents> Favorites { get; set; }
     }
 }

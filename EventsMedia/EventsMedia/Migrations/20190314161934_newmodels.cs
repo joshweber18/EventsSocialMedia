@@ -4,23 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventsMedia.Migrations
 {
-    public partial class thing : Migration
+    public partial class newmodels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AdventuresPost",
-                columns: table => new
-                {
-                    PostId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PostTitle = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AdventuresPost", x => x.PostId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -87,29 +74,19 @@ namespace EventsMedia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdventuresTable",
+                name: "AdventuresPost",
                 columns: table => new
                 {
-                    AdventureId = table.Column<int>(nullable: false)
+                    PostId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EventName = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    AdventurePostId = table.Column<int>(nullable: false)
+                    PostTitle = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdventuresTable", x => x.AdventureId);
+                    table.PrimaryKey("PK_AdventuresPost", x => x.PostId);
                     table.ForeignKey(
-                        name: "FK_AdventuresTable_AdventuresPost_AdventurePostId",
-                        column: x => x.AdventurePostId,
-                        principalTable: "AdventuresPost",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AdventuresTable_AspNetUsers_UserId",
+                        name: "FK_AdventuresPost_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -201,15 +178,92 @@ namespace EventsMedia.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AdventuresTable",
+                columns: table => new
+                {
+                    AdventureId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EventName = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AdventurePostId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdventuresTable", x => x.AdventureId);
+                    table.ForeignKey(
+                        name: "FK_AdventuresTable_AdventuresPost_AdventurePostId",
+                        column: x => x.AdventurePostId,
+                        principalTable: "AdventuresPost",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Comment = table.Column<string>(nullable: true),
+                    CommentDate = table.Column<DateTime>(nullable: false),
+                    AdventurePostId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comments_AdventuresPost_AdventurePostId",
+                        column: x => x.AdventurePostId,
+                        principalTable: "AdventuresPost",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favorites",
+                columns: table => new
+                {
+                    FavoriteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AdventureId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorites", x => x.FavoriteId);
+                    table.ForeignKey(
+                        name: "FK_Favorites_AdventuresTable_AdventureId",
+                        column: x => x.AdventureId,
+                        principalTable: "AdventuresTable",
+                        principalColumn: "AdventureId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Favorites_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdventuresPost_UserId",
+                table: "AdventuresPost",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AdventuresTable_AdventurePostId",
                 table: "AdventuresTable",
                 column: "AdventurePostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AdventuresTable_UserId",
-                table: "AdventuresTable",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -249,13 +303,30 @@ namespace EventsMedia.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AdventurePostId",
+                table: "Comments",
+                column: "AdventurePostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_AdventureId",
+                table: "Favorites",
+                column: "AdventureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_UserId",
+                table: "Favorites",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AdventuresTable");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -272,10 +343,19 @@ namespace EventsMedia.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AdventuresPost");
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Favorites");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AdventuresTable");
+
+            migrationBuilder.DropTable(
+                name: "AdventuresPost");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

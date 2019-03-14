@@ -59,6 +59,48 @@ namespace EventsMedia.Migrations
                     b.ToTable("AdventuresPost");
                 });
 
+            modelBuilder.Entity("EventsMedia.Models.CommentsTable", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdventurePostId");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime>("CommentDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("AdventurePostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.FavoriteEvents", b =>
+                {
+                    b.Property<int>("FavoriteId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdventureId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("FavoriteId");
+
+                    b.HasIndex("AdventureId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -252,6 +294,30 @@ namespace EventsMedia.Migrations
 
             modelBuilder.Entity("EventsMedia.Models.AdventurePost", b =>
                 {
+                    b.HasOne("EventsMedia.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.CommentsTable", b =>
+                {
+                    b.HasOne("EventsMedia.Models.AdventurePost", "AdventurePost")
+                        .WithMany()
+                        .HasForeignKey("AdventurePostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EventsMedia.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.FavoriteEvents", b =>
+                {
+                    b.HasOne("EventsMedia.Models.Adventure", "Adventure")
+                        .WithMany()
+                        .HasForeignKey("AdventureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("EventsMedia.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");

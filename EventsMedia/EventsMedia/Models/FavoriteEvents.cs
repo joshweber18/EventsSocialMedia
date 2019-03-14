@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace EventsMedia.Models
 {
-    public class AdventurePost
+    public class FavoriteEvents
     {
         [Key]
-        public int PostId { get; set; }
+        public int FavoriteId { get; set; }
 
-        public string PostTitle { get; set; }
+        [ForeignKey("Adventure")]
+        public int AdventureId { get; set; }
+        public Adventure Adventure { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
