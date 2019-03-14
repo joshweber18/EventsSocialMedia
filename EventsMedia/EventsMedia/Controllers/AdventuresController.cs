@@ -21,10 +21,11 @@ namespace EventsMedia.Controllers
         }
 
         // GET: Adventures
-        public async Task<IActionResult> Index()
+        public ActionResult Index(int id)
         {
-            var applicationDbContext = _context.AdventuresTable.Include(a => a.AdventurePost);
-            return View(await applicationDbContext.ToListAsync());
+            ViewModel adventure = new ViewModel();
+            adventure.adventures = _context.AdventuresTable.Where(a => a.AdventurePostId == id).ToList();
+            return View(adventure);
         }
 
         // GET: Adventures/Details/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventsMedia.Models.Adventure>
+﻿@model EventsMedia.Models.ViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -14,25 +14,21 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EventName)
+                @Html.DisplayNameFor(model => model.adventure.EventName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @Html.DisplayNameFor(model => model.adventure.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(model => model.adventure.Location)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.adventure.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdventurePost)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.adventures) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.EventName)
@@ -45,9 +41,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdventurePost.PostId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AdventureId">Edit</a> |

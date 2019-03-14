@@ -5,38 +5,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<html class="page">
+<head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PostTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationUser)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                    </td>
+                    <td>
+                        <button type="button" class="btn" value="@item.PostId">Select</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/js/Grid.js"></script>
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        $(".btn").click(function () {
+            var selectedid = $(this).val();
+            $.ajax({
+                type: 'GET',
+                data: { "id": selectedid },
+                url: "/Adventures/Index",
+                success: function (data) {
+                    $(".page").html(data);
+                }
+            });
+        });
+    });
+
+</script>
