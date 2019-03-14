@@ -20,5 +20,9 @@ namespace EventsMedia.Data
 
         public DbSet<CommentsTable> Comments { get; set; }
         public DbSet<FavoriteEvents> Favorites { get; set; }
+        public DbSet<Cities> Cities { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Cuisine> Cuisines { get; set; }
+        public DbSet<Establishment> Establishments { get; set; }
     }
 }
