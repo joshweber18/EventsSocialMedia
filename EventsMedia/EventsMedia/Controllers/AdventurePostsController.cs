@@ -7,26 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventsMedia.Data;
 using EventsMedia.Models;
+using System.Security.Claims;
 
 namespace EventsMedia.Controllers
 {
-    public class AdventuresController : Controller
+    public class AdventurePostsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AdventuresController(ApplicationDbContext context)
+        public AdventurePostsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Adventures
+        // GET: AdventurePosts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.AdventuresTable.Include(a => a.AdventurePost);
+            var applicationDbContext = _context.AdventuresPost.Include(a => a.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Adventures/Details/5
+        // GET: AdventurePosts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,46 +35,44 @@ namespace EventsMedia.Controllers
                 return NotFound();
             }
 
-            var adventure = await _context.AdventuresTable
-                .Include(a => a.AdventurePost)
-                .FirstOrDefaultAsync(m => m.AdventureId == id);
-            if (adventure == null)
+            var adventurePost = await _context.AdventuresPost
+                .Include(a => a.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            if (adventurePost == null)
             {
                 return NotFound();
             }
 
-            return View(adventure);
+            return View(adventurePost);
         }
 
-        // GET: Adventures/Create
-        public async Task<IActionResult> Create(int id)
+        // GET: AdventurePosts/Create
+        public IActionResult Create()
         {
-            //Adventure adventure = new Adventure();
-            //adventure.AdventurePostId = id;
-            //_context.Add(adventure);
-            //await _context.SaveChangesAsync();
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
-        // POST: Adventures/Create
+        // POST: AdventurePosts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId")] Adventure adventure)
+        public async Task<IActionResult> Create([Bind("PostId,PostTitle,UserId")] AdventurePost adventurePost)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(adventure);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                adventurePost.UserId = userId;
+                _context.Add(adventurePost);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Adventures", new { id = adventurePost.PostId });
             }
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId", adventure.AdventurePostId);
-            return View(adventure);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", adventurePost.UserId);
+            return View(adventurePost);
         }
 
-        // GET: Adventures/Edit/5
+        // GET: AdventurePosts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,23 +80,23 @@ namespace EventsMedia.Controllers
                 return NotFound();
             }
 
-            var adventure = await _context.AdventuresTable.FindAsync(id);
-            if (adventure == null)
+            var adventurePost = await _context.AdventuresPost.FindAsync(id);
+            if (adventurePost == null)
             {
                 return NotFound();
             }
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId", adventure.AdventurePostId);
-            return View(adventure);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", adventurePost.UserId);
+            return View(adventurePost);
         }
 
-        // POST: Adventures/Edit/5
+        // POST: AdventurePosts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId")] Adventure adventure)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,PostTitle,UserId")] AdventurePost adventurePost)
         {
-            if (id != adventure.AdventureId)
+            if (id != adventurePost.PostId)
             {
                 return NotFound();
             }
@@ -106,12 +105,12 @@ namespace EventsMedia.Controllers
             {
                 try
                 {
-                    _context.Update(adventure);
+                    _context.Update(adventurePost);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdventureExists(adventure.AdventureId))
+                    if (!AdventurePostExists(adventurePost.PostId))
                     {
                         return NotFound();
                     }
@@ -122,11 +121,11 @@ namespace EventsMedia.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId", adventure.AdventurePostId);
-            return View(adventure);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", adventurePost.UserId);
+            return View(adventurePost);
         }
 
-        // GET: Adventures/Delete/5
+        // GET: AdventurePosts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,31 +133,31 @@ namespace EventsMedia.Controllers
                 return NotFound();
             }
 
-            var adventure = await _context.AdventuresTable
-                .Include(a => a.AdventurePost)
-                .FirstOrDefaultAsync(m => m.AdventureId == id);
-            if (adventure == null)
+            var adventurePost = await _context.AdventuresPost
+                .Include(a => a.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            if (adventurePost == null)
             {
                 return NotFound();
             }
 
-            return View(adventure);
+            return View(adventurePost);
         }
 
-        // POST: Adventures/Delete/5
+        // POST: AdventurePosts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var adventure = await _context.AdventuresTable.FindAsync(id);
-            _context.AdventuresTable.Remove(adventure);
+            var adventurePost = await _context.AdventuresPost.FindAsync(id);
+            _context.AdventuresPost.Remove(adventurePost);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdventureExists(int id)
+        private bool AdventurePostExists(int id)
         {
-            return _context.AdventuresTable.Any(e => e.AdventureId == id);
+            return _context.AdventuresPost.Any(e => e.PostId == id);
         }
     }
 }

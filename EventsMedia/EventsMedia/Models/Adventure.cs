@@ -24,10 +24,6 @@ namespace EventsMedia.Models
 
         public string Description { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
-
         [ForeignKey("AdventurePost")]
         public int AdventurePostId { get; set; }
         public AdventurePost AdventurePost { get; set; }
