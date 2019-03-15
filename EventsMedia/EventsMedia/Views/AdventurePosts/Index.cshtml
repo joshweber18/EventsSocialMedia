@@ -33,7 +33,8 @@
                         @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
                     </td>
                     <td>
-                        <button type="button" class="btn" value="@item.PostId">Select</button>
+                        @Html.ActionLink("Select", "Index", "Adventures", new {userid = item.ApplicationUser.Id, id = item.PostId})
+                        @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
                     </td>
                 </tr>
             }
@@ -47,18 +48,18 @@
 
 <script>
 
-    $(document).ready(function () {
-        $(".btn").click(function () {
-            var selectedid = $(this).val();
-            $.ajax({
-                type: 'GET',
-                data: { "id": selectedid },
-                url: "/Adventures/Index",
-                success: function (data) {
-                    $(".page").html(data);
-                }
-            });
-        });
-    });
+    //$(document).ready(function () {
+    //    $(".btn").click(function () {
+    //        var selectedid = $(this).val();
+    //        $.ajax({
+    //            type: 'GET',
+    //            data: { "id": selectedid },
+    //            url: "/Adventures/Index",
+    //            success: function (data) {
+    //                $(".page").html(data);
+    //            }
+    //        });
+    //    });
+    //});
 
 </script>

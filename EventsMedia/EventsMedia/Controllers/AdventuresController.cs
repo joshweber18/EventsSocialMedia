@@ -21,10 +21,11 @@ namespace EventsMedia.Controllers
         }
 
         // GET: Adventures
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, string userid)
         {
             ViewModel adventure = new ViewModel();
             adventure.adventures = _context.AdventuresTable.Where(a => a.AdventurePostId == id).ToList();
+            ViewData["userid"] = userid;
             return View(adventure);
         }
 

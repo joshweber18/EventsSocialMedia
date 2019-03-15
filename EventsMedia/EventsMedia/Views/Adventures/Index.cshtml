@@ -5,49 +5,74 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<html id="load">
+<head>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.adventure.EventName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.adventure.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.adventure.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.adventure.Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.adventures)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select", "Create", "FavoriteEvents", new { id = item.AdventureId, userid = ViewData["userid"] })
+                        @*<button class="btn" type="button" value="@item.AdventureId">Select</button>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.adventure.EventName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.adventure.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.adventure.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.adventure.Description)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.adventures) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AdventureId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AdventureId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AdventureId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/js/Grid.js"></script>
+</body>
+</html>
+
+
+
+<script>
+
+    //$(document).ready(function () {
+    //    $(".btn").click(function () {
+    //        var selectedid = $(this).val();
+    //        $.ajax({
+    //            type: 'GET',
+    //            data: { "id": selectedid },
+    //            url: "/FavoriteEvents/Create",
+    //            success: function (data) {
+    //                $("#load").html(data);
+    //            }
+    //        });
+    //    });
+    //});
+
+</script>
+

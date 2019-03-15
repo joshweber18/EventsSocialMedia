@@ -1,0 +1,65 @@
+﻿@model EventsMedia.Models.FavoriteEvents
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="AdventureId" class="control-label"></label>
+                    <select asp-for="AdventureId" id="adventureid" class="form-control" value="@ViewData["AdventureId"]">@ViewData["AdventureId"]</select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" id="userid" class="form-control" value="@ViewData["UserId"]">@ViewData["UserId"]</select>
+                </div>
+                <div>
+                    @ViewData["AdventureId"]
+                </div>
+                <div class="form-group">
+                    <input class="submit2 btn btn-default" type="submit" value="Create" />
+                  
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<script>
+
+    //$(document).ready(function () {
+    //    $(".submit2").click(function () {
+    //        var favoriteEvents = {
+    //            'UserId': $("#userid").val(),
+    //            'AdventureId': $("#adventureid").val(),
+    //        }
+    //        alert(coordinate);
+    //        $.ajax({
+    //            type: 'POST',
+    //            data: { "favoriteEvents": favoriteEvents},
+    //            url: "/FavoriteEvents/Create",
+    //            success: function (data) {
+    //                alert(data);
+    //                $("#div2").html(data);
+    //            }
+    //        });
+    //    })
+    //})
+
+</script>
+
