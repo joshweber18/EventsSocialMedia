@@ -10,6 +10,7 @@ namespace EventsMedia.Models
         public AdventurePost post { get; set; }
         public Adventure adventure { get; set; }
         public List<Adventure> adventures { get; set; }
+        public List<FavoriteEvents> Favorites { get; set; }
 
     }
 }

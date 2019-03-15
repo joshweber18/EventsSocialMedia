@@ -1,35 +1,42 @@
-﻿@model IEnumerable<EventsMedia.Models.FavoriteEvents>
+﻿@model EventsMedia.Models.ViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Adventure)
+                @Html.DisplayNameFor(model => model.adventure.EventName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
+                @Html.DisplayNameFor(model => model.adventure.Date)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.adventure.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adventure.Location)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Favorites) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Adventure.AdventureId)
+                @Html.DisplayFor(modelItem => item.Adventure.EventName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                @Html.DisplayFor(modelItem => item.Adventure.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adventure.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adventure.Location)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FavoriteId">Edit</a> |

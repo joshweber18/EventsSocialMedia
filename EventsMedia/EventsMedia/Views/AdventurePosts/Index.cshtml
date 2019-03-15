@@ -33,7 +33,7 @@
                         @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
                     </td>
                     <td>
-                        @Html.ActionLink("Select", "Index", "Adventures", new {userid = item.ApplicationUser.Id, id = item.PostId})
+                        @Html.ActionLink("Select", "Index", "Adventures", new {userid = ViewData["userid"], id = item.PostId})
                         @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
                     </td>
                 </tr>

@@ -24,6 +24,7 @@ namespace EventsMedia.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.AdventuresPost.Include(a => a.ApplicationUser);
+            ViewData["userid"] = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View(await applicationDbContext.ToListAsync());
         }
 

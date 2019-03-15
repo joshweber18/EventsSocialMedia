@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventsMedia.Data;
 using EventsMedia.Models;
+using System.Security.Claims;
 
 namespace EventsMedia.Controllers
 {
@@ -20,10 +21,15 @@ namespace EventsMedia.Controllers
         }
 
         // GET: FavoriteEvents
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Favorites.Include(f => f.Adventure).Include(f => f.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+            ViewModel favoritesList = new ViewModel();
+            string userid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Favorites.Where(f => f.UserId == userid).FirstOrDefault();
+            favoritesList.Favorites = _context.Favorites.Where(f => f.UserId == user.UserId).ToList();
+            favoritesList.adventures = _context.AdventuresTable.Where(a => favoritesList.Favorites.Any(f => f.AdventureId == a.AdventureId)).ToList();
+
+            return View(favoritesList);
         }
 
         // GET: FavoriteEvents/Details/5
@@ -76,7 +82,7 @@ namespace EventsMedia.Controllers
         //    ViewData["AdventureId"] = new SelectList(_context.AdventuresTable, "AdventureId", "AdventureId", favoriteEvents.AdventureId);
         //    ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", favoriteEvents.UserId);
         //    return View(favoriteEvents);
-        }
+        //}
 
         // GET: FavoriteEvents/Edit/5
         public async Task<IActionResult> Edit(int? id)
