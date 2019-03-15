@@ -36,6 +36,9 @@
                         @Html.ActionLink("Select", "Index", "Adventures", new {userid = ViewData["userid"], id = item.PostId})
                         @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
                     </td>
+                    <td>
+                        @Html.ActionLink("Comment", "Create", "CommentsTables", new {userid = ViewData["userid"], id = item.PostId })
+                    </td>
                 </tr>
             }
         </tbody>
