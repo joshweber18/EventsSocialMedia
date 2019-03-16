@@ -25,21 +25,27 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PostTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Select", "Index", "Adventures", new {userid = ViewData["userid"], id = item.PostId})
-                        @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
-                    </td>
-                    <td>
-                        @Html.ActionLink("Comment", "Create", "CommentsTables", new {userid = ViewData["userid"], id = item.PostId })
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", "Adventures", new { userid = ViewData["userid"], id = item.PostId })
+                    @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
+                </td>
+                <td>
+                    @Html.ActionLink("Comment", "Create", "CommentsTables", new { userid = ViewData["userid"], id = item.PostId })
+                </td>
+                <td>
+                    @Html.ActionLink("Like", "Create", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })
+                </td>
+                <td>
+                    @Html.ActionLink("View Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -9,8 +9,11 @@ namespace EventsMedia.Models
     {
         public AdventurePost post { get; set; }
         public Adventure adventure { get; set; }
+        public ApplicationUser User { get; set; }
         public List<Adventure> adventures { get; set; }
         public List<FavoriteEvents> Favorites { get; set; }
+        public List<LikesTable> Likes { get; set; }
+        public List<ApplicationUser> Users { get; set; }
 
     }
 }

@@ -24,5 +24,6 @@ namespace EventsMedia.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cuisine> Cuisines { get; set; }
         public DbSet<Establishment> Establishments { get; set; }
+        public DbSet<LikesTable> Likes { get; set; }
     }
 }
