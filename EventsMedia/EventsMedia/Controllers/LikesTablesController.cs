@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventsMedia.Data;
 using EventsMedia.Models;
+using System.Security.Claims;
 
 namespace EventsMedia.Controllers
 {
@@ -52,6 +53,11 @@ namespace EventsMedia.Controllers
         // GET: LikesTables/Create
         public async Task<IActionResult> Create(string userid, int id)
         {
+            //string user = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //ViewModel check = new ViewModel();
+            //check.Likes = _context.Likes.Where(l => l.UserId == user).ToList();
+            //check.Users = _context.Likes.Where(l => check.Likes.Any(u => u.AdventurePostId == id)).ToList();
+
 
             LikesTable like = new LikesTable();
             like.UserId = userid;
