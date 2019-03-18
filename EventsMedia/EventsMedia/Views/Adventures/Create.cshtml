@@ -15,6 +15,7 @@
         <div class="col-md-4">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(model => model.ImagePath)
                 <div class="form-group">
                     <label asp-for="EventName" class="control-label"></label>
                     <input asp-for="EventName" class="form-control" />
@@ -35,7 +36,7 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group" type="hidden" >
+                <div class="form-group" type="hidden">
                     <label asp-for="AdventurePostId" class="control-label"></label>
                     <select asp-for="AdventurePostId" type="hidden" class="someclass form-control" asp-items="ViewBag.AdventurePostId"></select>
                 </div>
@@ -54,6 +55,18 @@
 
 </body>
 </html>
+
+@*<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="user_image" id="user_image" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Upload" class="btn btn-default" />
+    </div>
+</form>*@
+
+
+
 
 <script type="text/javascript">
 

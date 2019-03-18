@@ -14,6 +14,7 @@ namespace EventsMedia.Models
         public List<FavoriteEvents> Favorites { get; set; }
         public List<LikesTable> Likes { get; set; }
         public List<ApplicationUser> Users { get; set; }
+        public List<AdventurePost> Posts { get; set; }
 
     }
 }

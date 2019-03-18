@@ -13,6 +13,7 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Restaurants;
+using EventsMedia.Data;
 
 namespace EventsMedia.Controllers
 {
@@ -21,8 +22,21 @@ namespace EventsMedia.Controllers
 
         public static string apikey = "d9d2ad9c6bb2b26f98f4db8c581a6a17";
 
+
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
+            ViewModel viewmodel = new ViewModel();
+            //var groups = _context.Likes.GroupBy(l => l.AdventurePostId);
+            var result = from user in _context.Likes
+                         group user by new { user.AdventurePostId } into g
+                         select new { g.Key.AdventurePostId, MyCount = g.Count() };
+            
             return View();
         }
 

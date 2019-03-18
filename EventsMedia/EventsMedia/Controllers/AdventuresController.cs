@@ -8,12 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using EventsMedia.Data;
 using EventsMedia.Models;
 using System.Collections;
+using System.IO;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Http;
 
 namespace EventsMedia.Controllers
 {
     public class AdventuresController : Controller
     {
         private readonly ApplicationDbContext _context;
+        string connectionString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-EventsMedia-17293A85-812F-4154-8FC4-91CF9B2D6E5F;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public AdventuresController(ApplicationDbContext context)
         {
@@ -64,7 +68,7 @@ namespace EventsMedia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId")] Adventure adventure)
+        public async Task<IActionResult> Create([Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId,ImagePath")] Adventure adventure)
         {
             if (ModelState.IsValid)
             {
@@ -162,6 +166,50 @@ namespace EventsMedia.Controllers
         private bool AdventureExists(int id)
         {
             return _context.AdventuresTable.Any(e => e.AdventureId == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormCollection form)
+        {
+            string storePath = "wwwroot/Image/";
+            if (form.Files == null || form.Files[0].Length == 0)
+                return RedirectToAction("Index");
+
+
+            var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), storePath,
+                        form.Files[0].FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await form.Files[0].CopyToAsync(stream);
+            }
+
+            StoreInDB(storePath + form.Files[0].FileName);
+
+            return RedirectToAction("Create");
+
+        }
+
+        public void StoreInDB(string path)
+        {
+            using (var con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                using (var com = new SqlCommand("insert into Image(ImagePath) values('" + path + "')", con))
+                {
+                    try
+                    {
+                        com.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
+            }
         }
     }
 }

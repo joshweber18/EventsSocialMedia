@@ -21,6 +21,7 @@ namespace EventsMedia.Models
         public string Location { get; set; }
 
         public string Description { get; set; }
+        public string ImagePath { get; set; }
 
         [ForeignKey("AdventurePost")]
         public int AdventurePostId { get; set; }
