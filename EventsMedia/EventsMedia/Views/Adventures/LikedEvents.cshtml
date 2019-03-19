@@ -1,12 +1,14 @@
 ﻿@model EventsMedia.Models.ViewModel
-
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<html id="load">
+<!DOCTYPE html>
+
+<html>
 <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LikedEvents</title>
 </head>
 <body>
     <table class="table">
@@ -42,37 +44,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>
-                        @Html.ActionLink("Favorite", "Create", "FavoriteEvents", new { id = item.AdventureId, userid = ViewData["userid"] })
-                        @*<button class="btn" type="button" value="@item.AdventureId">Select</button>*@
-                    </td>
                 </tr>
             }
         </tbody>
     </table>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="~/js/Grid.js"></script>
 </body>
 </html>
-
-
-
-<script>
-
-    //$(document).ready(function () {
-    //    $(".btn").click(function () {
-    //        var selectedid = $(this).val();
-    //        $.ajax({
-    //            type: 'GET',
-    //            data: { "id": selectedid },
-    //            url: "/FavoriteEvents/Create",
-    //            success: function (data) {
-    //                $("#load").html(data);
-    //            }
-    //        });
-    //    });
-    //});
-
-</script>
-

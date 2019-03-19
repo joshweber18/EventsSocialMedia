@@ -160,5 +160,23 @@ namespace EventsMedia.Controllers
         {
             return _context.AdventuresPost.Any(e => e.PostId == id);
         }
+
+        public ActionResult YourProfile()
+        {
+            string userloggedin = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewModel viewmodel = new ViewModel();
+            viewmodel.Posts = _context.AdventuresPost.Where(a => a.UserId == userloggedin).ToList();
+            viewmodel.User = _context.User.Where(u => u.Id == userloggedin).SingleOrDefault();
+            return View(viewmodel);
+        }
+
+        public ActionResult PostedAdventures()
+        {
+            string userloggedin = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewModel viewmodel = new ViewModel();
+            viewmodel.Posts = _context.AdventuresPost.Where(a => a.UserId == userloggedin).ToList();
+            viewmodel.User = _context.User.Where(u => u.Id == userloggedin).SingleOrDefault();
+            return View(viewmodel);
+        }
     }
 }

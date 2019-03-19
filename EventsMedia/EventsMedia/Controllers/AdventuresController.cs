@@ -11,6 +11,7 @@ using System.Collections;
 using System.IO;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace EventsMedia.Controllers
 {
@@ -59,7 +60,7 @@ namespace EventsMedia.Controllers
             //adventure.AdventurePostId = id;
             //_context.Add(adventure);
             //await _context.SaveChangesAsync();
-            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId"); 
+            ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId");
             return View();
         }
 
@@ -171,7 +172,7 @@ namespace EventsMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadImage(IFormCollection form)
         {
-            string storePath = "wwwroot/Image/";
+            string storePath = "wwwroot/images/";
             if (form.Files == null || form.Files[0].Length == 0)
                 return RedirectToAction("Index");
 
@@ -186,30 +187,23 @@ namespace EventsMedia.Controllers
             }
 
             StoreInDB(storePath + form.Files[0].FileName);
-
-            return RedirectToAction("Create");
+            return View();
 
         }
 
-        public void StoreInDB(string path)
+        public ActionResult StoreInDB(string path)
         {
-            using (var con = new SqlConnection(connectionString))
-            {
-                con.Open();
+            return View();
+        }
 
-                using (var com = new SqlCommand("insert into Image(ImagePath) values('" + path + "')", con))
-                {
-                    try
-                    {
-                        com.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        throw;
-                    }
-                }
-            }
+        public ActionResult LikedEvents()
+        {
+            string userloggedin = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewModel viewmodel = new ViewModel();
+            viewmodel.Likes = _context.Likes.Where(l => l.UserId == userloggedin).ToList();
+            viewmodel.Posts = _context.AdventuresPost.Where(a => viewmodel.Likes.Any(l => a.PostId == l.AdventurePostId)).ToList();
+            viewmodel.adventures = _context.AdventuresTable.Where(a => viewmodel.Posts.Any(l => a.AdventurePostId == l.PostId)).ToList();
+            return View(viewmodel);
         }
     }
 }

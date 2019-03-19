@@ -1,0 +1,38 @@
+﻿@model EventsMedia.Models.ViewModel
+@{
+    ViewData["Title"] = "YourProfile";
+    Layout = null;
+}
+
+<html>
+<head>
+    <link href="~/css/Profile.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    @*<script src="jquery.min.js" type="text/javascript"></script>*@
+</head>
+<body>
+        <div class="container2">
+            <div class="name">@Html.DisplayFor(modelitem => modelitem.User.FirstName) @Html.DisplayFor(modelitem => modelitem.User.LastName)</div>
+        </div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a asp-area="" asp-controller="FavoriteEvents" asp-action="Index">Favorite Posts</a></li>
+                    <li><a asp-area="" asp-controller="Adventures" asp-action="LikedEvents">Liked Events</a></li>
+                    <li><a asp-area="" asp-controller="AdventurePosts" asp-action="PostedAdventures">Posted Adventures</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<script>
+
+
+
+</script>
