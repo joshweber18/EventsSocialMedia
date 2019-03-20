@@ -10,19 +10,20 @@
 
 </head>
 <body>
+    @*<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="user_image" id="user_image" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </form>*@
 
     <div class="row">
         <div class="col-md-4">
-            @*<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input type="file" name="user_image" id="user_image" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Upload" class="btn btn-default" />
-                </div>
-            </form>*@
-            <form asp-action="Create">
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*@Html.HiddenFor(model => model.ImagePath)*@
                 <div class="form-group">
                     <label asp-for="EventName" class="control-label"></label>
                     <input asp-for="EventName" class="form-control" />
@@ -43,9 +44,16 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
+                <div class="form-group" style="display: none;">
+                    <label asp-for="ImagePath" class="control-label"></label>
+                    <select asp-for="ImagePath" style="display: none;" class="someclass form-control" asp-items="@ViewBag.ImagePaths"></select>
+                </div>
                 <div class="form-group" type="hidden">
                     <label asp-for="AdventurePostId" class="control-label"></label>
                     <select asp-for="AdventurePostId" type="hidden" class="someclass form-control" asp-items="ViewBag.AdventurePostId"></select>
+                </div>
+                <div class="form-group">
+                    <input type="file" name="user_image" id="user_image" />
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Add" class="btn btn-default" />
@@ -57,29 +65,21 @@
         </div>
     </div>
 
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/js/Grid.js"></script>
 
 </body>
 </html>
 
-
-
-
-
-
 <script type="text/javascript">
-
     $(document).ready(function () {
          $('#buttonid').click(function () {
         document.location = '@Url.Action("Index","Adventures")';
     });
     });
-
     $(document).ready(function () {
         var myVal = $('.someclass option:last').val();
         $('.someclass').val(myVal);
     })
-
 </script>
-

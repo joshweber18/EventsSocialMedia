@@ -69,10 +69,28 @@ namespace EventsMedia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId,ImagePath")] Adventure adventure)
+        public async Task<IActionResult> Create([Bind("AdventureId,EventName,Date,Location,Description,AdventurePostId,ImagePath")] Adventure adventure, IFormCollection form)
         {
             if (ModelState.IsValid)
             {
+                string imageLocation;
+                string storePath = "wwwroot/images/";
+                if (form.Files == null || form.Files[0].Length == 0)
+                    return RedirectToAction("Index");
+
+
+                var path = Path.Combine(
+                            Directory.GetCurrentDirectory(), storePath,
+                            form.Files[0].FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await form.Files[0].CopyToAsync(stream);
+                }
+                imageLocation = (storePath + form.Files[0].FileName);
+                adventure.ImagePath = imageLocation;
+                ViewBag.ImagePaths = adventure.ImagePath;
+
                 _context.Add(adventure);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Create");

@@ -19,19 +19,34 @@
         <div class="container">
             <nav>
                 <ul>
-                    <li><a asp-area="" asp-controller="FavoriteEvents" asp-action="Index">Favorite Posts</a></li>
-                    <li><a asp-area="" asp-controller="Adventures" asp-action="LikedEvents">Liked Events</a></li>
-                    <li><a asp-area="" asp-controller="AdventurePosts" asp-action="PostedAdventures">Posted Adventures</a></li>
+                    <li><a href="" class="1">Favorite Posts</a></li>
+                    <li><a href="#" class="2">Liked Events</a></li>
+                    <li><a href="#" class="3">Posted Adventures</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <div id="favorite">
+
+    </div>
+
 </body>
 </html>
 
-<script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $(".1").click(function () {
+            var url = "/FavoriteEvents/Index";
+            alert("hey");
+            $.get(url, null, function (data) {
+                $("#favorite").html(data);
+            });
+        });
+    });
+
 
 
 
