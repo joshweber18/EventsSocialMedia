@@ -7,47 +7,93 @@
 <html>
 <head>
     <link href="~/css/Profile.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    @*<script src="jquery.min.js" type="text/javascript"></script>*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-red.css" />
 </head>
 <body>
-        <div class="container2">
-            <div class="name">@Html.DisplayFor(modelitem => modelitem.User.FirstName) @Html.DisplayFor(modelitem => modelitem.User.LastName)</div>
-        </div>
-    
-    <header>
-        <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="" class="1">Favorite Posts</a></li>
-                    <li><a href="#" class="2">Liked Events</a></li>
-                    <li><a href="#" class="3">Posted Adventures</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div id="favorite">
-
+    <div>
+        <div class="name">@Html.DisplayFor(modelitem => modelitem.User.FirstName) @Html.DisplayFor(modelitem => modelitem.User.LastName)</div>
     </div>
+
+    @*<header>
+            <div class="container">
+                <nav>
+
+                        <button type="button" id="1" class="btn btn-outline-primary" value="Favorite"></button>
+                        <li><input type="button" id="2" class="btn btn-outline-primary" value="Liked Events" /></li>
+                        <li><input type="button" id="3" class="btn btn-outline-primary" value="Posted Adventures" /></li>
+
+                </nav>
+            </div>
+    </header>*@
+    <div style="text-align:center;">
+        <button type="button" id="2" class="btn btn-outline-primary" style="font-size:20px; margin:10px;">Liked Adventures</button>
+        <button type="button" id="1" class="btn btn-outline-primary" style="font-size:20px; margin:10px;">Favorite Events</button>
+        <button type="button" id="3" class="btn btn-outline-primary" style="font-size:20px; margin:10px;">Posted Adventures</button>
+    </div>
+ 
+
+    <div class="favorite"></div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 </body>
 </html>
 
 <script type="text/javascript">
 
-
     $(document).ready(function () {
-        $(".1").click(function () {
-            var url = "/FavoriteEvents/Index";
-            alert("hey");
-            $.get(url, null, function (data) {
-                $("#favorite").html(data);
+        $("#1").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/FavoriteEvents/Index",
+                success: function (data) {
+                    console.log("SUCCESS!");
+                    console.log('data', data);
+                    $(".favorite").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
             });
         });
     });
 
+    $(document).ready(function () {
+        $("#2").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/Adventures/LikedPosts",
+                success: function (data) {
+                    console.log("SUCCESS!");
+                    console.log('data', data);
+                    $(".favorite").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
+            });
+        });
+    });
 
-
+    $(document).ready(function () {
+        $("#3").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/AdventurePosts/PostedAdventues",
+                success: function (data) {
+                    console.log("SUCCESS!");
+                    console.log('data', data);
+                    $(".favorite").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
+            });
+        });
+    });
 
 </script>

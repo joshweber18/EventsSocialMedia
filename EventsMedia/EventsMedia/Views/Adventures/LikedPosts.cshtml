@@ -1,0 +1,48 @@
+﻿@model EventsMedia.Models.ViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/LikedEvents.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container2">
+        @foreach (var item in Model.Posts)
+        {
+            <div style="font-family:sans-serif; text-decoration:none; font-size:30px;">@Html.DisplayNameFor(model => model.post.PostTitle)</div>
+            <div style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</div>
+            <button type="button" class="btn btn-outline-primary 1" value="@item.PostId" style="font-size:20px; margin:10px; border-radius:70%;">View More</button>
+        }
+
+        <div id="space"></div>
+
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".1").click(function () {
+            var selectedid = $(this).val();
+            $.ajax({
+                type: 'GET',
+                data: { "id": selectedid },
+                url: "/AdventurePosts/EventsWithPostId",
+                success: function (data) {
+                    $("#space").html(data);
+                }
+            });
+        });
+    });
+
+</script>

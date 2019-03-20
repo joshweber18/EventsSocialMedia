@@ -25,8 +25,11 @@ nav {
     color: white;
     margin-top: 70px;
 }
+nav button {
+    text-align: center;
+}
 
-nav ul {
+/*nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -65,7 +68,7 @@ nav a::before {
 
 nav a:hover::before {
     width: 75%;
-}
+}*/
 
 .name {
     font-size: 40px;
@@ -76,4 +79,8 @@ nav a:hover::before {
 .container2 {
     width: 80%;
     margin: 0 auto;
+}
+
+btn btn-outline-primary {
+    margin: 10px;
 }

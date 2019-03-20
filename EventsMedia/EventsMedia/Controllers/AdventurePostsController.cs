@@ -178,5 +178,12 @@ namespace EventsMedia.Controllers
             viewmodel.User = _context.User.Where(u => u.Id == userloggedin).SingleOrDefault();
             return View(viewmodel);
         }
+
+        public ActionResult EventsWithPostId (int id)
+        {
+            ViewModel viewmodel = new ViewModel();
+            viewmodel.adventures = _context.AdventuresTable.Where(a => a.AdventurePostId == id).ToList();
+            return View(viewmodel);
+        }
     }
 }

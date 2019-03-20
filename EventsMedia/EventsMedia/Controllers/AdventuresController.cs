@@ -214,7 +214,7 @@ namespace EventsMedia.Controllers
             return View();
         }
 
-        public ActionResult LikedEvents()
+        public ActionResult LikedPosts()
         {
             string userloggedin = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewModel viewmodel = new ViewModel();
