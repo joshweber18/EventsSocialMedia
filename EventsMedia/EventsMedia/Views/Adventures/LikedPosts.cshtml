@@ -7,20 +7,40 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="~/css/LikedEvents.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="container2">
-        @foreach (var item in Model.Posts)
-        {
+    @foreach (var item in Model.Posts)
+    {
+        <div class="container2">
             <div style="font-family:sans-serif; text-decoration:none; font-size:30px;">@Html.DisplayNameFor(model => model.post.PostTitle)</div>
             <div style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</div>
-            <button type="button" class="btn btn-outline-primary 1" value="@item.PostId" style="font-size:20px; margin:10px; border-radius:70%;">View More</button>
-        }
+            <button type="button" id="@item.PostId" class="fas fa-angle-double-down" value="@item.PostId" style="font-size:20px; margin:10px;"></button>
+            <div id="@item.PostId"></div>
+        </div>
+        <div style="padding:30px;"></div>
 
-        <div id="space"></div>
 
-    </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#@item.PostId").click(function () {
+                    var selectedid = $(this).val();
+                    $.ajax({
+                        type: 'GET',
+                        data: { "id": selectedid },
+                        url: "/AdventurePosts/EventsWithPostId",
+                        success: function (data) {
+                            $("#@item.PostId").html(data);
+                        }
+                    });
+                });
+            });
+        </script>
+    }
+
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -29,20 +49,20 @@
 </body>
 </html>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
     $(document).ready(function () {
-        $(".1").click(function () {
+        $(".").click(function () {
             var selectedid = $(this).val();
             $.ajax({
                 type: 'GET',
                 data: { "id": selectedid },
                 url: "/AdventurePosts/EventsWithPostId",
                 success: function (data) {
-                    $("#space").html(data);
+                    $(".space").html(data);
                 }
             });
         });
     });
 
-</script>
+</script>*@
