@@ -17,7 +17,7 @@
             <div style="font-family:sans-serif; text-decoration:none; font-size:30px;">@Html.DisplayNameFor(model => model.post.PostTitle)</div>
             <div style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</div>
             <button type="button" id="@item.PostId" class="fas fa-angle-double-down" value="@item.PostId" style="font-size:20px; margin:10px;"></button>
-            <div id="@item.PostId"></div>
+            <div class="@item.PostId"></div>
         </div>
         <div style="padding:30px;"></div>
 
@@ -25,18 +25,23 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#@item.PostId").click(function () {
+                $("#@item.PostId").on('click', function () {
+                    $(".@item.PostId").animate({
+                        height: 'toggle'
+                    },
+                    );
                     var selectedid = $(this).val();
                     $.ajax({
                         type: 'GET',
                         data: { "id": selectedid },
                         url: "/AdventurePosts/EventsWithPostId",
                         success: function (data) {
-                            $("#@item.PostId").html(data);
+                            $(".@item.PostId").html(data);
                         }
                     });
                 });
             });
+
         </script>
     }
 
