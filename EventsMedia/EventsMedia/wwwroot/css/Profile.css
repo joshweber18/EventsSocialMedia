@@ -21,54 +21,49 @@ header::after {
 }
 
 nav {
-    text-align: center;
-    color: white;
-    margin-top: 70px;
-}
-nav button {
-    text-align: center;
+    float: right;
 }
 
-/*nav ul {
+nav ul {
     margin: 0;
     padding: 0;
-    list-style: none;
+    list-style:none;
 }
 
 nav li {
     display: inline-block;
     margin-left: 70px;
-    padding-top: 30px;
-    padding: 20px;
+    padding-top: 20px;
+
     position: relative;
 }
 
-nav a {
-    color: white;
+nav button {
+    color: #444;
     text-decoration: none;
     text-transform: uppercase;
 }
 
-nav a:hover {
-    color: black;
+nav button:hover {
+    color: #000;
 }
 
-nav a::before {
-    content: '';
-    display: block;
-    height: 5px;
-    background-color: white;
+    nav button::before {
+        content: '';
+        display: block;
+        height: 5px;
+        background-color: #444;
+        position: absolute;
+        top: 5px;
+        width: 0%;
 
-    position: absolute;
-    top: 0;
-    width: 0;
+        transition: all ease-in-out 250ms;
+    }
 
-    transition: all ease-in-out 250ms;
-}
+    nav button:hover::before {
+        width: 85%;
+    }
 
-nav a:hover::before {
-    width: 75%;
-}*/
 
 .name {
     font-size: 40px;
