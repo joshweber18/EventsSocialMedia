@@ -1,15 +1,9 @@
-﻿.border2 {
-    border: 13px; 
-    border-color: black;
-    border-style:solid;
-}
-
+﻿
 .container2 {
     width: 50%;
     margin: 0 auto;
-    border: 3px outset #E00B27;
-    border-bottom-color: black;
-    border-right-color: black;
+    border: 5px;
+    border-color: black;
     border-style: solid;
     text-align: center;
 }

@@ -7,7 +7,7 @@
 
 <html class="page">
 <head>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
     <table class="table">
@@ -16,10 +16,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.PostTitle)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser)
-                </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +26,6 @@
                     @Html.DisplayFor(modelItem => item.PostTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-                </td>
-                <td>
                     @Html.ActionLink("Select", "Index", "Adventures", new { userid = ViewData["userid"], id = item.PostId })
                     @*<button type="button" class="btn" value="@item.PostId">Select</button>*@
                 </td>
@@ -40,13 +33,15 @@
                     @Html.ActionLink("Comment", "Create", "CommentsTables", new { userid = ViewData["userid"], id = item.PostId })
                 </td>
                 <td>
-                    @Html.ActionLink("Like", "Create", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })
+                    <button class="fas fa-thumbs-up btn"></button>
+                    @*@Html.ActionLink("Like", "Create", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })*@
                 </td>
                 <td>
                     @Html.ActionLink("View Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })
                 </td>
             </tr>
             }
+            
         </tbody>
     </table>
 
@@ -63,12 +58,25 @@
     //        $.ajax({
     //            type: 'GET',
     //            data: { "id": selectedid },
-    //            url: "/Adventures/Index",
+    //            url: "/Create/LikesTable",
     //            success: function (data) {
     //                $(".page").html(data);
     //            }
     //        });
     //    });
     //});
+
+    var white = false
+    var bgcolor;
+    $(document).ready(function () {
+        $(".btn").click(function () {
+            if (white = !white) {
+                bgcolor = $(this).css('backgroundColor');
+                $(this).css("background-color", "#373EFF");
+            } else {
+                $(this).css("background-color", bgcolor);
+            }
+        });
+    });
 
 </script>

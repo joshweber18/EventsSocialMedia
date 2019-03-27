@@ -185,5 +185,29 @@ namespace EventsMedia.Controllers
             viewmodel.adventures = _context.AdventuresTable.Where(a => a.AdventurePostId == id).ToList();
             return View(viewmodel);
         }
+
+
+        public IActionResult PopularAdventures()
+        {
+            ViewModel viewmodel = new ViewModel();
+            var result = from user in _context.Likes
+                         group user by new { user.AdventurePostId } into g
+                         select new { g.Key.AdventurePostId, UserLikes = g.Count() };
+
+            var postIds = _context.Likes.Select(l => l.AdventurePostId).Distinct();
+            var adventurePostsWithLikes = _context.AdventuresPost.Where(ap => postIds.Contains(ap.PostId)).ToList();
+
+            // make new dictionary
+            Dictionary<AdventurePost, int> postsWithLikeCount = new Dictionary<AdventurePost, int>();
+
+            for (int i = 0; i < adventurePostsWithLikes.Count(); i++)
+            {
+                int matchingpostwithlikes = result.Where(r => r.AdventurePostId == adventurePostsWithLikes[i].PostId).Select(r => r.UserLikes).SingleOrDefault();
+                postsWithLikeCount.Add(adventurePostsWithLikes[i], matchingpostwithlikes);
+            }
+            var dictionary = postsWithLikeCount.OrderByDescending(p => p.Value);
+
+            return View(dictionary);
+        }
     }
 }

@@ -13,10 +13,14 @@
 <body>
     @foreach (var item in Model.Posts)
     {
-        <div class="container2">
-            <div style="font-family:sans-serif; text-decoration:none; font-size:30px;">@Html.DisplayNameFor(model => model.post.PostTitle)</div>
-            <div style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</div>
-            <button type="button" id="@item.PostId" class="fas fa-angle-double-down" value="@item.PostId" style="font-size:20px; margin:10px;"></button>
+        <div class="container2" style="border-color:black;">
+            <header class="header2">
+                <span style="font-family:sans-serif; text-decoration:none; font-size:30px; color:white;">@Html.DisplayNameFor(model => model.post.PostTitle): </span>
+                <span style="text-decoration:none; font-size:30px; color:white">@Html.DisplayFor(modelItem => item.PostTitle)</span>
+            </header>
+        </div>
+        <div class="container2" style="border-color:black;">
+            <button type="button" id="@item.PostId" class="fas fa-angle-double-down" value="@item.PostId" style="font-size:20px; margin:10px; text-align:center;"></button>
             <div class="@item.PostId"></div>
         </div>
         <div style="padding:30px;"></div>
