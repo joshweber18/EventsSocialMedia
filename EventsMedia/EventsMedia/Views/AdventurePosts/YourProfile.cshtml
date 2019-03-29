@@ -83,6 +83,23 @@
         });
     });
 
+    $(document).ready(function () {
+        $("#4").click(function () {
+            window.history.pushState('obj', 'PageTitle', '/Home/Index');
+            location.reload(true);
+            alert("hey");
+            $.ajax({
+                type: 'GET',
+                url: "/Home/Index",
+                success: function (data) {
+                    $(".home").html(data);
+                },
+                failure: function () {
+                    alert("failure");
+                }
+            });
+        });
+    });
 </script>
 
 

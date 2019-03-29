@@ -33,8 +33,8 @@
                     @Html.ActionLink("Comment", "Create", "CommentsTables", new { userid = ViewData["userid"], id = item.PostId })
                 </td>
                 <td>
-                    <button class="fas fa-thumbs-up btn"></button>
-                    @*@Html.ActionLink("Like", "Create", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })*@
+                    @*<button class="fas fa-thumbs-up btn"></button>*@
+                    @Html.ActionLink("Like", "Create", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })
                 </td>
                 <td>
                     @Html.ActionLink("View Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.PostId })

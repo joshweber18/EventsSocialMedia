@@ -73,23 +73,23 @@ namespace EventsMedia.Controllers
         {
             if (ModelState.IsValid)
             {
-                string imageLocation;
-                string storePath = "wwwroot/images/";
-                if (form.Files == null || form.Files[0].Length == 0)
-                    return RedirectToAction("Index");
+                //string imageLocation;
+                //string storePath = "wwwroot/images/";
+                //if (form.Files == null || form.Files[0].Length == 0)
+                //    return RedirectToAction("Index");
 
 
-                var path = Path.Combine(
-                            Directory.GetCurrentDirectory(), storePath,
-                            form.Files[0].FileName);
+                //var path = Path.Combine(
+                //            Directory.GetCurrentDirectory(), storePath,
+                //            form.Files[0].FileName);
 
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    await form.Files[0].CopyToAsync(stream);
-                }
-                imageLocation = (storePath + form.Files[0].FileName);
-                adventure.ImagePath = imageLocation;
-                ViewBag.ImagePaths = adventure.ImagePath;
+                //using (var stream = new FileStream(path, FileMode.Create))
+                //{
+                //    await form.Files[0].CopyToAsync(stream);
+                //}
+                //imageLocation = (storePath + form.Files[0].FileName);
+                //adventure.ImagePath = imageLocation;
+                //ViewBag.ImagePaths = adventure.ImagePath;
 
                 _context.Add(adventure);
                 await _context.SaveChangesAsync();
@@ -222,6 +222,11 @@ namespace EventsMedia.Controllers
             viewmodel.Posts = _context.AdventuresPost.Where(a => viewmodel.Likes.Any(l => a.PostId == l.AdventurePostId)).ToList();
             viewmodel.adventures = _context.AdventuresTable.Where(a => viewmodel.Posts.Any(l => a.AdventurePostId == l.PostId)).ToList();
             return View(viewmodel);
+        }
+
+        public ActionResult Table()
+        {
+            return View();
         }
     }
 }

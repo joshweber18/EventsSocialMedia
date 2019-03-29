@@ -21,7 +21,6 @@
                     <li><button type="button" id="2" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Restaurants</button></li>
                     <li><button type="button" id="3" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Events</button></li>
                     <li><button type="button" id="4" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Your Profile</button></li>
-
                 </ul>
             </nav>
         </div>
@@ -45,6 +44,8 @@
 
     $(document).ready(function () {
         $("#1").click(function () {
+            window.history.pushState('obj', 'PageTitle', 'AdventurePosts/YourProfile');
+            location.reload(true);
             $.ajax({
                 type: 'GET',
                 url: "/AdventurePosts/PopularAdventures",
@@ -60,6 +61,8 @@
 
     $(document).ready(function () {
         $("#2").click(function () {
+            window.history.pushState('obj', 'PageTitle', 'AdventurePosts/YourProfile');
+            location.reload(true);
             $.ajax({
                 type: 'GET',
                 url: "/Restaurants/GetCity",
@@ -75,6 +78,8 @@
 
     $(document).ready(function () {
         $("#3").click(function () {
+            window.history.pushState('obj', 'PageTitle', 'AdventurePosts/YourProfile');
+            location.reload(true);
             $.ajax({
                 type: 'GET',
                 url: "/Eventful/Index",
