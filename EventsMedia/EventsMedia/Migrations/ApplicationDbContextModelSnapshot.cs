@@ -33,6 +33,8 @@ namespace EventsMedia.Migrations
 
                     b.Property<string>("EventName");
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<string>("Location");
 
                     b.HasKey("AdventureId");
@@ -47,6 +49,8 @@ namespace EventsMedia.Migrations
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LikeCounter");
 
                     b.Property<string>("PostTitle");
 

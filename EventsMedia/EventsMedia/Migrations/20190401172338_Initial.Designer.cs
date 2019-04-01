@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventsMedia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190314161934_newmodels")]
-    partial class newmodels
+    [Migration("20190401172338_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,8 @@ namespace EventsMedia.Migrations
 
                     b.Property<string>("EventName");
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<string>("Location");
 
                     b.HasKey("AdventureId");
@@ -50,6 +52,8 @@ namespace EventsMedia.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("LikeCounter");
+
                     b.Property<string>("PostTitle");
 
                     b.Property<string>("UserId");
@@ -59,6 +63,38 @@ namespace EventsMedia.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AdventuresPost");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.Cities", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<string>("State");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("EventsMedia.Models.CommentsTable", b =>
@@ -84,6 +120,32 @@ namespace EventsMedia.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("EventsMedia.Models.Cuisine", b =>
+                {
+                    b.Property<int>("CuisineId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CuisineName");
+
+                    b.HasKey("CuisineId");
+
+                    b.ToTable("Cuisines");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.Establishment", b =>
+                {
+                    b.Property<int>("EstablishmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EstablishmentName");
+
+                    b.HasKey("EstablishmentId");
+
+                    b.ToTable("Establishments");
+                });
+
             modelBuilder.Entity("EventsMedia.Models.FavoriteEvents", b =>
                 {
                     b.Property<int>("FavoriteId")
@@ -101,6 +163,25 @@ namespace EventsMedia.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.LikesTable", b =>
+                {
+                    b.Property<int>("LikeId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdventurePostId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("LikeId");
+
+                    b.HasIndex("AdventurePostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -318,6 +399,18 @@ namespace EventsMedia.Migrations
                     b.HasOne("EventsMedia.Models.Adventure", "Adventure")
                         .WithMany()
                         .HasForeignKey("AdventureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EventsMedia.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("EventsMedia.Models.LikesTable", b =>
+                {
+                    b.HasOne("EventsMedia.Models.AdventurePost", "AdventurePost")
+                        .WithMany()
+                        .HasForeignKey("AdventurePostId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventsMedia.Models.ApplicationUser", "ApplicationUser")

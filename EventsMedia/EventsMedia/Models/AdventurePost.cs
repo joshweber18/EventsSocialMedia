@@ -14,6 +14,8 @@ namespace EventsMedia.Models
 
         public string PostTitle { get; set; }
 
+        public int LikeCounter { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

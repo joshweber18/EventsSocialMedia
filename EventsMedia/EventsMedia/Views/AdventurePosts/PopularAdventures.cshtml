@@ -1,0 +1,26 @@
+﻿@model EventsMedia.Models.ViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container2">
+        <div class="responsive-table">
+            @foreach (var item in Model.Posts)
+            {
+                <div class="table-row">
+                    <span style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</span>
+                    <span style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.LikeCounter) Likes</span>
+                    <button type="button" class="btn select @item.PostId" value="@item.PostId" style="font-size:20px; margin:10px; background-color:#95A5A6;">View Details</button>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
