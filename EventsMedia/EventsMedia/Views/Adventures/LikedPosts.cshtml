@@ -13,20 +13,36 @@
 <body>
     <div class="container2">
         <div class="responsive-table">
-            @*<div class="table-header">
-                <div style="font-family:sans-serif; text-decoration:none; font-size:30px; color:white;">Title</div>
-            </div>*@
             @foreach (var item in Model.Posts)
             {
-            <div class="table-row">
-                <span style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</span>
-                @Html.ActionLink("View Details", "EventsWithPostId", "AdventurePosts", new { id = item.PostId }, null)
-                @*<button type="button" id="@item.PostId" class="btn select" value="@item.PostId" style="font-size:20px; margin:10px; background-color:#95A5A6;">View Details</button>*@
-            </div>
+                <div class="table-row">
+                    <span style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.PostTitle)</span>
+                    <button type="button" class="btn select @item.PostId" value="@item.PostId" style="font-size:20px; margin:10px; background-color:#95A5A6;">View Details</button>
+                </div>
 
 
                 <script type="text/javascript">
+
                     $(document).ready(function () {
+
+                        $(".@item.PostId").click(function () {
+                            var selectedid = $(this).val();
+                            $.ajax({
+                                type: 'GET',
+                                cache: false,
+                                url: "/AdventurePosts/EventsWithPostId",
+                                data: { "id": selectedid },
+                                success: function (data) {
+                                    jQuery.noConflict();
+                                    $("#myModal").modal('show');
+                                    $("#myForm").html(data);
+                                }
+                            })
+                        })
+                    })
+
+
+                    @*$(document).ready(function () {
                         $("#@item.PostId").on('click', function () {
                             alert("hi");
                             $(".@item.PostId").animate({
@@ -43,51 +59,30 @@
                                 }
                             });
                         });
-                    });
+                    });*@
                 </script>
             }
         </div>
     </div>
 
 
+    <div class="container" style="margin-top:2%;">
 
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form id="myForm">
 
-    @*@foreach (var item in Model.Posts)
-        {
-            <div class="container2" style="border-color:black;">
-                <header class="header2">
-                    <span style="font-family:sans-serif; text-decoration:none; font-size:30px; color:white;">@Html.DisplayNameFor(model => model.post.PostTitle): </span>
-                    <span style="text-decoration:none; font-size:30px; color:white">@Html.DisplayFor(modelItem => item.PostTitle)</span>
-                </header>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" style="font-size:25px;" data-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
             </div>
-            <div class="container2" style="border-color:black;">
-                <button type="button" id="@item.PostId" class="fas fa-angle-double-down" value="@item.PostId" style="font-size:20px; margin:10px; text-align:center;"></button>
-                <div class="@item.PostId"></div>
-            </div>
-            <div style="padding:30px;"></div>
-
-
-
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#@item.PostId").on('click', function () {
-                        $(".@item.PostId").animate({
-                            height: 'toggle'
-                        },
-                        );
-                        var selectedid = $(this).val();
-                        $.ajax({
-                            type: 'GET',
-                            data: { "id": selectedid },
-                            url: "/AdventurePosts/EventsWithPostId",
-                            success: function (data) {
-                                $(".@item.PostId").html(data);
-                            }
-                        });
-                    });
-                });
-            </script>
-        }*@
+        </div>
+    </div>
 
 
 
