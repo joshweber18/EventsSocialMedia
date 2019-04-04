@@ -15,7 +15,7 @@ namespace EventsMedia.Models
         public List<LikesTable> Likes { get; set; }
         public List<ApplicationUser> Users { get; set; }
         public List<AdventurePost> Posts { get; set; }
-        public Dictionary<AdventurePost, AdventurePost> LikedPosts { get; set; }
+        public Dictionary<AdventurePost, ApplicationUser> PopularPosts { get; set; }
         public List<int> LikeCounter { get; set; }
 
     }

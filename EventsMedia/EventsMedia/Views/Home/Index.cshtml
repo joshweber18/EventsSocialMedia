@@ -113,5 +113,21 @@
             });
         });
 
+    $(document).ready(function () {
+        $("#yea").click(function () {
+            alert("hello");
+            $.ajax({
+                type: 'GET',
+                url: '/AdventurePosts/Create',
+                success: function (data) {
+                    $(".area").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
+            });
+        });
+    });
+
 
 </script>

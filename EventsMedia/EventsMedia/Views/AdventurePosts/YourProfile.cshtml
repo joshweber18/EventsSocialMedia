@@ -17,7 +17,7 @@
     <div class="row">
         <i class="fab fa-autoprefixer" style="font-size:50px; margin:25px; color:red;"></i>
         <div class="name">@Html.DisplayFor(modelitem => modelitem.User.FirstName) @Html.DisplayFor(modelitem => modelitem.User.LastName)</div>
-        <a class="btn" style="font-size:50px; margin-left:1000px; margin-top:20px;"><span class="fas fa-home" id="4"></span></a>
+        <a class="btn" style="font-size:50px; margin-left:900px; margin-top:20px;"><span class="fas fa-home" id="4"></span></a>
     </div>
 
     <header>
@@ -26,13 +26,13 @@
                 <ul>
                     <li><button type="button" id="6" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Liked Adventures</button></li>
                     <li><button type="button" id="7" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Favorite Events</button></li>
-                    <li><button type="button" id="8" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Posted Adventures</button></li>
+                    <li><button type="button" id="5" class="btn btn-outline-primary" style="font-size:20px; margin:10px; color:white;">Posted Adventures</button></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <div style="padding:20px;"></div>
+    <div style="margin:20px;"></div>
 
 
     <div class="place"></div>
@@ -69,8 +69,21 @@
                 type: 'GET',
                 url: "/Adventures/LikedPosts",
                 success: function (data) {
-                    console.log("SUCCESS!");
-                    console.log('data', data);
+                    $(".place").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#5").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/AdventurePosts/PostedAdventures",
+                success: function (data) {
                     $(".place").html(data);
                 },
                 failure: function () {
@@ -84,7 +97,6 @@
         $("#4").click(function () {
             window.history.pushState('obj', 'PageTitle', '/Home/Index');
             location.reload(true);
-            alert("hey");
             $.ajax({
                 type: 'GET',
                 url: "/Home/Index",

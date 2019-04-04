@@ -1,0 +1,25 @@
+﻿body {
+}
+
+.container5 {
+    margin: 0 auto;
+    width: 50%;
+    height: 190px;
+    background-color: white;
+    border: solid 3px;
+    border-color: black;
+
+}
+
+.header2 {
+    width:auto;
+    height: 30%;
+    top: 0;
+    background-color: red;
+}
+
+.content1 {
+    width:auto;
+    background-color: transparent;
+    height: 70%;
+}

@@ -197,16 +197,38 @@ namespace EventsMedia.Controllers
             var postIds = _context.Likes.Select(l => l.AdventurePostId).Distinct();
             var posts = _context.AdventuresPost.Where(ap => postIds.Contains(ap.PostId)).ToList();
             
+
             // make new dictionary
+            Dictionary<AdventurePost, ApplicationUser> postsWithLikeCount = new Dictionary<AdventurePost, ApplicationUser>();
 
             foreach (var item in posts)
             {
                 item.LikeCounter = result.Where(r => r.AdventurePostId == item.PostId).Select(r => r.UserLikes).SingleOrDefault();
             }
 
+            viewmodel.Users = _context.User.Select(row => row).ToList();
             viewmodel.Posts = posts.OrderByDescending(p => p.LikeCounter).ToList();
 
-            return View(viewmodel);
+            //viewmodel.Users = _context.User.Where(u => viewmodel.Posts.Any(p => u.Id == p.UserId)).ToList();
+            //_context.User.Where(u => viewmodel.Posts.Any(p => u.Id == p.UserId)).ToList();
+
+            foreach(var item in viewmodel.Posts)
+            {
+                viewmodel.Users = _context.User.Where(u => u.Id == item.UserId).ToList();
+            }
+
+                for (int i = 0; i < viewmodel.Posts.Count(); i++)
+                {
+                    viewmodel.Users = _context.User.Where(u => u.Id == viewmodel.Posts[i].UserId).ToList();
+                    postsWithLikeCount.Add(viewmodel.Posts[i], viewmodel.Users[0]);
+                }
+
+            return View(postsWithLikeCount);
+        }
+
+        public IActionResult Table()
+        {
+            return View();
         }
     }
 }

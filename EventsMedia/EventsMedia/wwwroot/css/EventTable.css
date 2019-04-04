@@ -15,7 +15,7 @@
 
     .background::after {
         content: '';
-        background: #D31722;
+        background: #48aaff;
         background: -moz-linear-gradient(top, #D31722 0%, #D31722 100%);
         background: -webkit-linear-gradient(top, #D31722 0%,#D31722 100%);
         background: linear-gradient(to bottom, #D31722 0%,#D31722 100%);
@@ -34,7 +34,7 @@
     }
 }
 
-.container {
+.container3 {
     margin: 0 auto;
     padding: 50px 0 0;
     max-width: 960px;
@@ -42,7 +42,7 @@
 }
 
 .panel {
-    background-color: #D31722;
+    background-color: #48aaff;
     border-radius: 10px;
     padding: 15px 25px;
     position: relative;

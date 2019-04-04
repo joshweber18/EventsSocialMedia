@@ -11,27 +11,29 @@
     <link href="~/css/EventTable.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="background">
-        <div class="container">
-            <div class="panel pricing-table">
-                @foreach (var item in Model.adventures)
-                {
-                    <div class="pricing-plan">
-                        @*<img src="https://s22.postimg.cc/8mv5gn7w1/paper-plane.png" alt="" class="pricing-img">*@
-                        <h2 class="pricing-header">@Html.DisplayNameFor(model => model.adventure.EventName)</h2>
-                        <h2 class="pricing-header">@Html.DisplayFor(modelItem => item.EventName)</h2>
-                        <ul class="pricing-features">
-                            <li class="pricing-features-item">@Html.DisplayNameFor(model => model.adventure.Date)</li>
-                            <li class="pricing-features-item">@Html.DisplayFor(modelItem => item.Date)</li>
-                            <li class="pricing-features-item">@Html.DisplayNameFor(model => model.adventure.Location)</li>
-                            <li class="pricing-features-item">@Html.DisplayFor(modelItem => item.Location)</li>
+    <div class="col-4">
+        <div class="background">
+            <div class="container3">
+                <div class="panel pricing-table">
+                    @foreach (var item in Model.adventures)
+                    {
+                        <div class="pricing-plan">
+                            @*<img src="https://s22.postimg.cc/8mv5gn7w1/paper-plane.png" alt="" class="pricing-img">*@
+                            <h2 class="pricing-header">@Html.DisplayNameFor(model => model.adventure.EventName)</h2>
+                            <h2 class="pricing-header">@Html.DisplayFor(modelItem => item.EventName)</h2>
+                            <ul class="pricing-features">
+                                <li class="pricing-features-item">@Html.DisplayNameFor(model => model.adventure.Date)</li>
+                                <li class="pricing-features-item">@Html.DisplayFor(modelItem => item.Date)</li>
+                                <li class="pricing-features-item">@Html.DisplayNameFor(model => model.adventure.Location)</li>
+                                <li class="pricing-features-item">@Html.DisplayFor(modelItem => item.Location)</li>
 
-                        </ul>
-                        <span class="pricing-price">@Html.DisplayNameFor(model => model.adventure.Description)</span>
-                        <span class="pricing-price">@Html.DisplayFor(modelItem => item.Description)</span>
-                        @*<a href="#/" class="pricing-button">Sign up</a>*@
-                    </div>
-                }
+                            </ul>
+                            <span class="pricing-price">@Html.DisplayNameFor(model => model.adventure.Description)</span>
+                            <span class="pricing-price">@Html.DisplayFor(modelItem => item.Description)</span>
+                            @*<a href="#/" class="pricing-button">Sign up</a>*@
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
