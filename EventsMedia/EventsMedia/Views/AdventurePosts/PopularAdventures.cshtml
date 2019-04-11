@@ -85,8 +85,53 @@
 
 
 <script type="text/javascript">
+
     $(document).ready(function () {
         $(".btn").click(function () {
+            var white = false
+            var bgcolor;
+            if (white = !white) {
+                bgcolor = $(this).css('backgroundColor');
+                $(this).css("background-color", "#373EFF");
+                var selectedid = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    data: { "id": selectedid },
+                    url: "/LikesTables/Create",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+            else if (white = white)
+            {
+                $(this).css("background-color", bgcolor);
+                var selectedid = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    data: { "id": selectedid },
+                    url: "/LikesTables/Delete",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+
+    @*$(document).ready(function () {
+        $(".btn").click(function () {
+            var white = false
+            var bgcolor;
+            if (white = !white) {
+                bgcolor = $(this).css('backgroundColor');
+                $(this).css("background-color", "#373EFF");
+            } else {
+                $(this).css("background-color", bgcolor);
+            }
             var selectedid = $(this).val();
             $.ajax({
                 type: 'GET',
@@ -97,5 +142,4 @@
                 }
             });
         });
-    });
-</script>
+    });*@
