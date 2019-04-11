@@ -19,6 +19,7 @@ namespace EventsMedia.Controllers
             _context = context;
         }
 
+
         // GET: CommentsTables
         public async Task<IActionResult> Index()
         {

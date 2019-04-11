@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<html>
+<html class="page">
 <head>
     @*<link rel="stylesheet" type="text/css" href="~/css/CreatePost.css" />*@
 
@@ -79,12 +79,34 @@
             <input asp-for="PostTitle" type="text" placeholder="Title" class="form-control" />
             <span asp-validation-for="PostTitle" class="text-danger"></span>
             <div>
-                <input type="submit" value="Create" class="btn" style="margin-top: 20px;" />
+                <input type="submit" value="Create" id="sub" class="btn" style="margin-top: 20px;" />
             </div>
         </form>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </body>
 </html>
 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sub").click(function () {
+            alert("hello");
+            $.ajax({
+                type: 'GET',
+                url: '/AdventurePosts/Create',
+                success: function (data) {
+                    $(".page").html(data);
+                },
+                failure: function () {
+                    console.log("Noooooo...");
+                }
+            });
+        });
+    });
+</script>
 
 

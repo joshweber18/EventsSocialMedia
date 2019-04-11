@@ -1,6 +1,4 @@
-﻿body {
-}
-
+﻿
 .container5 {
     margin: 0 auto;
     width: 50%;
@@ -22,4 +20,10 @@
     width:auto;
     background-color: transparent;
     height: 70%;
+}
+
+.content2 {
+    width:auto;
+    float:right;
+    margin-top:55px;
 }

@@ -9,13 +9,14 @@
 <head>
     <link href="~/css/NewTableLayout.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
+
     <div style="margin-top:20px;"></div>
 
     @foreach (var item in Model)
     {
-
         <div class="container5">
             <div class="header2">
                 <i class="fab fa-autoprefixer" style="font-size:33px; margin-right:20px; margin-left:10px; color:black;"></i>
@@ -25,31 +26,34 @@
             <div class="content1">
                 <div style="margin-top:30px;"></div>
                 <span style="text-decoration:none; margin-right:150px; font-size:30px;">@Html.DisplayFor(modelItem => item.Key.PostTitle)</span>
-                <span style="text-decoration:none; font-size:30px;">@Html.DisplayFor(modelItem => item.Key.LikeCounter) @Html.ActionLink("Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.Key.PostId })</span>
                 <button type="button" class="btn select @item.Key.PostId" value="@item.Key.PostId" style="font-size:20px; margin:10px; background-color:#95A5A6; float:right;">View Details</button>
+                <div class="content2">
+                    <button class="fas fa-thumbs-up btn" value="@item.Key.PostId" style="font-size:25px; margin-right:10px;"></button>
+                    <span style="text-decoration:none; font-size:20px; padding-top:30px;">@Html.DisplayFor(modelItem => item.Key.LikeCounter) @Html.ActionLink("Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.Key.PostId })</span>
+                </div>
             </div>
         </div>
-        <div style="margin-top:15px;"></div>
+        <div style="margin-top:25px;"></div>
 
         <script type="text/javascript">
 
-                    $(document).ready(function () {
-
-                        $(".@item.Key.PostId").click(function () {
-                            var selectedid = $(this).val();
-                            $.ajax({
-                                type: 'GET',
-                                cache: false,
-                                url: "/AdventurePosts/EventsWithPostId",
-                                data: { "id": selectedid },
-                                success: function (data) {
-                                    jQuery.noConflict();
-                                    $("#myModal").modal('show');
-                                    $("#myForm").html(data);
-                                }
-                            })
-                        })
+            $(document).ready(function () {
+                $(".@item.Key.PostId").click(function () {
+                    var selectedid = $(this).val();
+                    $.ajax({
+                        type: 'GET',
+                        cache: false,
+                        url: "/AdventurePosts/EventsWithPostId",
+                        data: { "id": selectedid },
+                        success: function (data) {
+                            jQuery.noConflict();
+                            $("#myModal").modal('show');
+                            $("#myForm").html(data);
+                        }
                     })
+                })
+            });
+
         </script>
     }
 
@@ -77,3 +81,21 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btn").click(function () {
+            var selectedid = $(this).val();
+            $.ajax({
+                type: 'GET',
+                data: { "id": selectedid },
+                url: "/LikesTables/Create",
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>

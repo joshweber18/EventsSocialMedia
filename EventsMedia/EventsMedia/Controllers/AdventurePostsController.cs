@@ -209,26 +209,18 @@ namespace EventsMedia.Controllers
             viewmodel.Users = _context.User.Select(row => row).ToList();
             viewmodel.Posts = posts.OrderByDescending(p => p.LikeCounter).ToList();
 
-            //viewmodel.Users = _context.User.Where(u => viewmodel.Posts.Any(p => u.Id == p.UserId)).ToList();
-            //_context.User.Where(u => viewmodel.Posts.Any(p => u.Id == p.UserId)).ToList();
-
             foreach(var item in viewmodel.Posts)
             {
                 viewmodel.Users = _context.User.Where(u => u.Id == item.UserId).ToList();
             }
 
-                for (int i = 0; i < viewmodel.Posts.Count(); i++)
-                {
-                    viewmodel.Users = _context.User.Where(u => u.Id == viewmodel.Posts[i].UserId).ToList();
-                    postsWithLikeCount.Add(viewmodel.Posts[i], viewmodel.Users[0]);
-                }
+            for (int i = 0; i < viewmodel.Posts.Count(); i++)
+            {
+                viewmodel.Users = _context.User.Where(u => u.Id == viewmodel.Posts[i].UserId).ToList();
+                postsWithLikeCount.Add(viewmodel.Posts[i], viewmodel.Users[0]);
+            }
 
             return View(postsWithLikeCount);
-        }
-
-        public IActionResult Table()
-        {
-            return View();
         }
     }
 }

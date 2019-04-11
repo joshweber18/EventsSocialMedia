@@ -51,39 +51,24 @@ namespace EventsMedia.Controllers
         }
 
         // GET: LikesTables/Create
-        public async Task<IActionResult> Create(string userid, int id)
+        public async Task<IActionResult> Create(int id)
         {
-            //string user = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //ViewModel check = new ViewModel();
-            //check.Likes = _context.Likes.Where(l => l.UserId == user).ToList();
-            //check.Users = _context.Likes.Where(l => check.Likes.Any(u => u.AdventurePostId == id)).ToList();
-
-
+            string userid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             LikesTable like = new LikesTable();
             like.UserId = userid;
             like.AdventurePostId = id;
-            _context.Add(like);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "AdventurePosts");
+            bool contains = _context.Likes.Any(l => l.UserId == userid && l.AdventurePostId == id);
+            if (contains == false)
+            {
+                _context.Add(like);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "AdventurePosts");
+            }
+            else
+            {
+                return RedirectToAction("Index", "AdventurePosts");
+            }
         }
-
-        // POST: LikesTables/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("LikeId,AdventurePostId,UserId")] LikesTable likesTable)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(likesTable);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["AdventurePostId"] = new SelectList(_context.AdventuresPost, "PostId", "PostId", likesTable.AdventurePostId);
-        //    ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", likesTable.UserId);
-        //    return View(likesTable);
-        //}
 
         // GET: LikesTables/Edit/5
         public async Task<IActionResult> Edit(int? id)
