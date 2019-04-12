@@ -126,34 +126,13 @@ namespace EventsMedia.Controllers
         }
 
         // GET: LikesTables/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var likesTable = await _context.Likes
-                .Include(l => l.AdventurePost)
-                .Include(l => l.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.LikeId == id);
-            if (likesTable == null)
-            {
-                return NotFound();
-            }
-
-            return View(likesTable);
-        }
-
-        // POST: LikesTables/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var likesTable = await _context.Likes.FindAsync(id);
-            _context.Likes.Remove(likesTable);
+            string userid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            LikesTable like = _context.Likes.Where(l => l.UserId == userid && l.AdventurePostId == id).SingleOrDefault();
+            _context.Likes.Remove(like);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "AdventurePosts");
         }
 
         private bool LikesTableExists(int id)

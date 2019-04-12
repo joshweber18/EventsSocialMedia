@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-
 <html>
 <head>
     <link href="~/css/NewTableLayout.css" rel="stylesheet" type="text/css" />
@@ -28,11 +26,12 @@
                 <span style="text-decoration:none; margin-right:150px; font-size:30px;">@Html.DisplayFor(modelItem => item.Key.PostTitle)</span>
                 <button type="button" class="btn select @item.Key.PostId" value="@item.Key.PostId" style="font-size:20px; margin:10px; background-color:#95A5A6; float:right;">View Details</button>
                 <div class="content2">
-                    <button class="fas fa-thumbs-up btn" value="@item.Key.PostId" style="font-size:25px; margin-right:10px;"></button>
+                    <button class="fas fa-thumbs-up btn button" value="@item.Key.PostId" style="font-size:25px; margin-right:10px;"></button>
                     <span style="text-decoration:none; font-size:20px; padding-top:30px;">@Html.DisplayFor(modelItem => item.Key.LikeCounter) @Html.ActionLink("Likes", "Index", "LikesTables", new { userid = ViewData["userid"], id = item.Key.PostId })</span>
                 </div>
             </div>
         </div>
+
         <div style="margin-top:25px;"></div>
 
         <script type="text/javascript">
@@ -54,6 +53,37 @@
                 })
             });
 
+
+            var white = false
+            var bgcolor;
+            $(document).ready(function () {
+                $(".button").click(function () {
+                    if (white = !white) {
+                        $(this).css("background-color", "#373EFF");
+                        bgcolor = $(this).css('background-color');
+                        var selectedid = $(this).val();
+                        $.ajax({
+                            type: 'GET',
+                            data: { "id": selectedid },
+                            url: "/LikesTables/Create",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                    } else {
+                        $(this).css("background-color", bgcolor);
+                        var selectedid = $(this).val();
+                        $.ajax({
+                            type: 'GET',
+                            data: { "id": selectedid },
+                            url: "/LikesTables/Delete",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                    }
+                });
+            });
         </script>
     }
 
@@ -85,39 +115,6 @@
 
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
-        $(".btn").click(function () {
-            var white = false
-            var bgcolor;
-            if (white = !white) {
-                bgcolor = $(this).css('backgroundColor');
-                $(this).css("background-color", "#373EFF");
-                var selectedid = $(this).val();
-                $.ajax({
-                    type: 'GET',
-                    data: { "id": selectedid },
-                    url: "/LikesTables/Create",
-                    success: function (data) {
-                        console.log(data);
-                    }
-                });
-            }
-            else if (white = white)
-            {
-                $(this).css("background-color", bgcolor);
-                var selectedid = $(this).val();
-                $.ajax({
-                    type: 'GET',
-                    data: { "id": selectedid },
-                    url: "/LikesTables/Delete",
-                    success: function (data) {
-                        console.log(data);
-                    }
-                });
-            }
-        });
-    });
 
 </script>
 
